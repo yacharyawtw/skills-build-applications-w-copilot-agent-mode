@@ -1,51 +1,12 @@
 /**
- * API Configuration and utility functions
+ * API utility helpers
  * 
- * Environment Configuration:
- * - VITE_CODESPACE_NAME: Required for Codespaces deployments
- *   Set in .env.local: VITE_CODESPACE_NAME=your-codespace-name
- *   When set: https://{VITE_CODESPACE_NAME}-8000.app.github.dev/api/
- *   When unset: http://localhost:8000/api/ (local development)
+ * Components construct their own endpoint URLs using import.meta.env.VITE_CODESPACE_NAME
+ * Example:
+ *   const API_URL = import.meta.env.VITE_CODESPACE_NAME
+ *     ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/activities`
+ *     : 'http://localhost:8000/api/activities';
  */
-
-const getApiBaseUrl = () => {
-  const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
-  
-  if (codespaceName) {
-    return `https://${codespaceName}-8000.app.github.dev/api`;
-  }
-  
-  // Fallback to localhost for local development
-  return 'http://localhost:8000/api';
-};
-
-export const API_BASE_URL = getApiBaseUrl();
-
-/**
- * Generic fetch wrapper with error handling
- */
-export const apiCall = async (endpoint, options = {}) => {
-  const url = `${API_BASE_URL}${endpoint}`;
-  
-  try {
-    const response = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-      ...options,
-    });
-    
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.status} ${response.statusText}`);
-    }
-    
-    return await response.json();
-  } catch (error) {
-    console.error(`Failed to fetch ${endpoint}:`, error);
-    throw error;
-  }
-};
 
 /**
  * Ensure data is an array (handles both paginated responses and direct arrays)

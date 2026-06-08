@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { apiCall, ensureArray } from '../utils/api';
+import { ensureArray } from '../utils/api';
 
 export default function Teams() {
   const [teams, setTeams] = useState([]);
@@ -10,7 +10,12 @@ export default function Teams() {
     const fetchTeams = async () => {
       try {
         setLoading(true);
-        const data = await apiCall('/teams/');
+        const API_URL = import.meta.env.VITE_CODESPACE_NAME
+          ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/teams`
+          : 'http://localhost:8000/api/teams';
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error(`API Error: ${response.status}`);
+        const data = await response.json();
         setTeams(ensureArray(data));
         setError(null);
       } catch (err) {

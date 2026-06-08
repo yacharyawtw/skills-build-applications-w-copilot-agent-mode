@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { apiCall, ensureArray } from '../utils/api';
+import { ensureArray } from '../utils/api';
 
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -10,7 +10,12 @@ export default function Users() {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const data = await apiCall('/users/');
+        const API_URL = import.meta.env.VITE_CODESPACE_NAME
+          ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/users`
+          : 'http://localhost:8000/api/users';
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error(`API Error: ${response.status}`);
+        const data = await response.json();
         setUsers(ensureArray(data));
         setError(null);
       } catch (err) {

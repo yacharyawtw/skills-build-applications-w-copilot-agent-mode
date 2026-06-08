@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
-import { API_BASE_URL } from '../utils/api';
 
 export default function Navigation() {
+  const API_URL = import.meta.env.VITE_CODESPACE_NAME
+    ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api`
+    : 'http://localhost:8000/api';
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -39,7 +42,7 @@ export default function Navigation() {
             </li>
           </ul>
         </div>
-        <small className="text-muted d-inline ms-3">API: {API_BASE_URL}</small>
+        <small className="text-muted d-inline ms-3">API: {API_URL}</small>
       </div>
     </nav>
   );
