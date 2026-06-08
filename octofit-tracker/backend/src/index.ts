@@ -9,6 +9,7 @@ import { Workout } from './models/Workout';
 const app = express();
 const port = 8000;
 
+
 const mongoUri = process.env.MONGO_URI ?? 'mongodb://127.0.0.1:27017/octofit_db';
 
 // Codespaces-aware API URL support
