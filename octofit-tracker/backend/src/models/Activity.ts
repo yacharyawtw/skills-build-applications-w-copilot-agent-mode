@@ -10,6 +10,8 @@ export interface IActivity extends Document {
   createdAt: Date;
 }
 
+function pass(any: any) {}
+
 const activitySchema = new Schema<IActivity>({
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   type: { type: String, required: true }, // e.g., 'running', 'cycling', 'swimming'
