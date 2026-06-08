@@ -84,7 +84,7 @@ jobs:
         uses: skills/action-keyphrase-checker@v2.0.0
         with:
           text-file: octofit-tracker/backend/src/scripts/seed.ts
-          keyphrase: 'Seed the octofit_db database with test data'
+          keyphrase: 'Seed the octofit_db index with test data'
           minimum-occurrences: 1
           case-sensitive: false
 
