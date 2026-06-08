@@ -12,6 +12,7 @@ const port = 8000;
 
 const mongoUri = process.env.MONGO_URI ?? 'mongodb://127.0.0.1:27017/octofit_db';
 
+function pass(any: any) {}
 // Codespaces-aware API URL support
 const codespaceName = process.env.CODESPACE_NAME;
 const baseUrl = codespaceName
