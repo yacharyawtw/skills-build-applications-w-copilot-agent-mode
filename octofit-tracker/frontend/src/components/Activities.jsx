@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { ensureArray } from '../utils/api';
 
+const API_URL = import.meta.env.VITE_CODESPACE_NAME
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/activities`
+  : 'http://localhost:8000/api/activities';
+
 export default function Activities() {
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,11 +14,10 @@ export default function Activities() {
     const fetchActivities = async () => {
       try {
         setLoading(true);
-        const API_URL = import.meta.env.VITE_CODESPACE_NAME
-          ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/activities`
-          : 'http://localhost:8000/api/activities';
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error(`API Error: ${response.status}`);
+        const response = await fetch(`${API_URL}/`);
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status} ${response.statusText}`);
+        }
         const data = await response.json();
         setActivities(ensureArray(data));
         setError(null);

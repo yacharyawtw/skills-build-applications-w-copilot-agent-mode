@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { ensureArray } from '../utils/api';
 
+const API_URL = import.meta.env.VITE_CODESPACE_NAME
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/workouts`
+  : 'http://localhost:8000/api/workouts';
+
 export default function Workouts() {
   const [workouts, setWorkouts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,11 +14,10 @@ export default function Workouts() {
     const fetchWorkouts = async () => {
       try {
         setLoading(true);
-        const API_URL = import.meta.env.VITE_CODESPACE_NAME
-          ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/workouts`
-          : 'http://localhost:8000/api/workouts';
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error(`API Error: ${response.status}`);
+        const response = await fetch(`${API_URL}/`);
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status} ${response.statusText}`);
+        }
         const data = await response.json();
         setWorkouts(ensureArray(data));
         setError(null);

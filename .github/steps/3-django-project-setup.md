@@ -38,7 +38,7 @@ Use this prompt file:
 
 Confirm these files include expected content:
 
-- `octofit-tracker/backend/src/config/database.ts` includes `octofit_db` and `mongoose`.
+- `octofit-tracker/backend/src/index.ts` includes `octofit_db` and `mongoose`.
 - `octofit-tracker/backend/src/scripts/seed.ts` includes a seed command description.
 
 </details>

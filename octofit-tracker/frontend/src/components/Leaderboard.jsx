@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { ensureArray } from '../utils/api';
 
+const API_URL = import.meta.env.VITE_CODESPACE_NAME
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard`
+  : 'http://localhost:8000/api/leaderboard';
+
 export default function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,11 +14,10 @@ export default function Leaderboard() {
     const fetchLeaderboard = async () => {
       try {
         setLoading(true);
-        const API_URL = import.meta.env.VITE_CODESPACE_NAME
-          ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard`
-          : 'http://localhost:8000/api/leaderboard';
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error(`API Error: ${response.status}`);
+        const response = await fetch(`${API_URL}/`);
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status} ${response.statusText}`);
+        }
         const data = await response.json();
         setLeaderboard(ensureArray(data));
         setError(null);
