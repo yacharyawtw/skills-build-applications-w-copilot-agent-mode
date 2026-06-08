@@ -58,22 +58,22 @@ jobs:
           edit-mode: replace
 
       # START: Check practical exercise
-      - name: Check database config file for octofit_db
+      - name: Check backend entrypoint for octofit_db
         id: check-octofit-db
         continue-on-error: true
         uses: skills/action-keyphrase-checker@v2.0.0
         with:
-          text-file: octofit-tracker/backend/src/config/database.ts
+          text-file: octofit-tracker/backend/src/index.ts
           keyphrase: 'octofit_db'
           minimum-occurrences: 1
           case-sensitive: false
 
-      - name: Check database config file for mongoose
+      - name: Check backend entrypoint for mongoose
         id: check-mongoose-config
         continue-on-error: true
         uses: skills/action-keyphrase-checker@v2.0.0
         with:
-          text-file: octofit-tracker/backend/src/config/database.ts
+          text-file: octofit-tracker/backend/src/index.ts
           keyphrase: 'mongoose'
           minimum-occurrences: 1
           case-sensitive: false
@@ -99,9 +99,9 @@ jobs:
           vars: |
             step_number: 3
             results_table:
-              - description: "Check database.ts for octofit_db"
+              - description: "Check index.ts for octofit_db"
                 passed: ${{ steps.check-octofit-db.outcome == 'success' }}
-              - description: "Check database.ts for mongoose"
+              - description: "Check index.ts for mongoose"
                 passed: ${{ steps.check-mongoose-config.outcome == 'success' }}
               - description: "Check seed.ts for test data seed description"
                 passed: ${{ steps.check-seed-script.outcome == 'success' }}
