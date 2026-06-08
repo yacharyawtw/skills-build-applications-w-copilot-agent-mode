@@ -1,5 +1,5 @@
 /**
- * Seed the octofit_db database with test data.
+ * Seed the octofit_db index with test data.
  * Run with: npm run seed --prefix octofit-tracker/backend
  */
 
